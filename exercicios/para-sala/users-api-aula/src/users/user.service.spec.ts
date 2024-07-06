@@ -69,3 +69,33 @@ describe('Create User', () => {
     ).rejects.toThrow('Invalid password');
   });
 });
+
+describe('GetUserById', () => {
+  let userService: UserService;
+
+  beforeEach(() => {
+    userService = new UserService();
+  });
+
+  test('Deve encontrar o usuário com id 1', async () => {
+    const id = '1';
+    const name = 'Lais';
+    const email = 'lais.frigerio@gmail.com';
+    const password = 'T3st@123!';
+    const cpf = '457.153.530-92';
+
+    const user = await userService.createUser(name, email, password, cpf);
+
+    expect(user).toEqual({
+      id,
+      name,
+      email,
+      password,
+      cpf,
+      address: null, 
+    });
+
+   const encontrado = userService.getUserById(id);
+    expect(encontrado).toEqual(user);
+  });
+});
